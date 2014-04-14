@@ -1,0 +1,18 @@
+Package: hollisterOnline2014
+Type: Package
+Title: Package to reproduceJ.W. Hollister (2014)
+Version: 1.0
+Date: 2013-12-11
+Author: Jeffrey W. Hollister
+Maintainer: Jeffrey W. Hollister <hollister.jeff@epa.gov>
+Description: This is the package associated with Hollister 2014 publicaion about
+    the impacts of online activities on article views of scientific papers.  The
+    functions grab the most recent data, conduct the analyses in the paper, and
+    generate the figures.
+License: GPL
+Depends:
+    rplos,
+    alm,
+    ggplot2,
+    grid,
+    lubridate

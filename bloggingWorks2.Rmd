@@ -1,0 +1,65 @@
+Does blogging/tweeting make a difference?
+========================================================
+
+<em>post written by: Jeff Hollister</em>
+
+As citations, and increasingly alternative metrics (e.g. <a href="http://en.wikipedia.org/wiki/Altmetrics">altmetrics</a>), are the currency by which researchers, even at EPA, advance, anything that can be done to increase visibility of published research and track that increase is likely to be well received. One of the easiest ways is to blog about a new article and share the new article via Twitter.
+
+This was the tact that we took with a new article in <a href="http://www.plosone.org/article/info:doi/10.1371/journal.pone.0081457">PLOS ONE</a>. We blogged about it <a href="http://blog.epa.gov/science/2013/12/sparrows-lakes-and-nutrients/">here</a> and this was followed up by 5 tweets from <a href="https://twitter.com/EPAresearch">@EPAresearch</a> about the paper and blog post.  Did this have a measurable impact? This figure shows the cumulative views for the article from the date of publication. The blog post and tweets are indicated on the graph (sorry for the poor aesthetics, my first try at <code>ggplot()</code>).
+
+```{r fig.width=8, fig.height=7, echo=FALSE,message=FALSE}
+library(alm)
+library(ggplot2)
+library(grid)
+library(lubridate)
+milstDOI<-"10.1371/journal.pone.0081457"
+hollistDOI<-"10.1371/journal.pone.0025764"
+out <- alm(doi=milstDOI, info="detail")
+milstCounts<-out$history[ out$history$.id %in% 'counter' ,]
+out <- alm(doi=hollistDOI, info="detail")
+hollistCounts<-out$history[ out$history$.id %in% 'counter' ,]
+ggplot(milstCounts[1:19,],aes(x=ymd(dates),y=totals)) +
+  geom_point(colour="blue",size = 3.5) +
+  geom_segment(arrow = arrow(length = unit(0.3,"cm")),
+               aes(x=ymd("2013-12-03"),xend=ymd("2013-12-03"),y=300, yend = 330),
+               colour="grey50",size=1.5) +
+  geom_text(aes(x=ymd("2013-12-03"), y=285,
+                label="Blog post"),
+            colour="grey50") +
+  geom_segment(arrow = arrow(length = unit(0.3,"cm")),
+               aes(x=ymd("2013-12-05"),xend=ymd("2013-12-04"),y=320, yend = 350),
+               colour="grey50",size=1.5) +
+  geom_segment(arrow = arrow(length = unit(0.3,"cm")),
+               aes(x=ymd("2013-12-05"),xend=ymd("2013-12-05"),y=320, yend = 370),
+               colour="grey50",size=1.5) +
+  geom_text(aes(x=ymd("2013-12-06"), y=305,label="@EPAresearch\ntweets"),
+            colour="grey50") +
+  ggtitle("Article Views for Milstead, et al. (2013)") +
+  xlab("Date") + ylab ("Cumulative Article Views")
+ 
+```
+
+Extending this example to a related paper that was published in 2011 also shows a similar change that occurred about the same time (Sep 2013) I increased my online presence via curating several researcher specific websites (<a href="http://orcid.org/0000-0002-9254-9740">ORCID</a>,<a href="http://scholar.google.com/citations?user=Fn9BjfIAAAAJ&amp;hl=en">Google Scholar</a>, <a href="http://impactstory.org/JeffreyHollister">ImpactStory</a>, increasing activity on <a href="https://twitter.com/jhollist">Twitter</a>, maintaining a personal site (<a href="http://jwhollister.com">jwhollister.com</a> ), and starting a <a href="http://landeco2point0.wordpress.com/">blog</a>. Aside from the typical methods of measuring on-line impact (e.g.blog statistics, number of followers, <a href="http://klout.com">Klout</a>, etc.), it appears that, for researchers, article views might be another quantitative measure of on-line impact that may also lead to increased citations. The following figure shows the total cumulative views for <a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0025764">Hollister et al. (2011)</a> since publication.
+
+```{r fig.width=8, fig.height=7, echo=FALSE,message=FALSE}
+ggplot(hollistCounts[1:626,],aes(x=ymd(dates),y=totals)) +
+  geom_point(colour="blue",size = 3.5) +
+  geom_segment(arrow = arrow(length = unit(0.3,"cm")),
+               aes(x=ymd("2013-09-15"),xend=ymd("2013-09-15"),y=1400, yend = 1500),
+               colour="grey50",size=1.5) +
+  geom_text(aes(x=ymd("2013-09-01"), y=1350,
+                label="Increase in \nonline activity"),
+            colour="grey50") +
+  ggtitle("Article Views for Hollister, et al. (2011)") +
+  xlab("Date") + ylab ("Cumulative Article Views")
+```
+
+While the jump in article views is not as dramatic as that shown for the targeted blog posts, the change in the slope of the line is, I think, more interesting. It shows that for whatever reason the rate at which people are viewing our paper has increased. So, does blogging/tweeting (and online activity in general) make a difference? Based on these two cases I am strongly inclined to say yes. Sure, I am, implying it is my increased online activity that led to this change. I also realize that these analyses are nothing more than data-driven anecdotes, but I do think they make the point. At a minimum, it is enough for me to keep doing what I have been doing and to advocate strongly for this type of activity among my colleagues.
+
+# References:
+Hollister JW, Milstead WB, Urrutia MA (2011) Predicting Maximum Lake Depth from Surrounding Topography. PLoS ONE 6(9): e25764. doi:10.1371/journal.pone.0025764 [link](http://dx.doi.org/10.1371/journal.pone.0025764)
+
+Milstead WB, Hollister JW, Moore RB, Walker HA (2013) Estimating Summer Nutrient Concentrations in Northeastern Lakes from SPARROW Load Predictions and Modeled Lake Depth and Volume. PLoS ONE 8(11): e81457. doi:10.1371/journal.pone.0081457 [link](http://dx.doi.org/10.1371/journal.pone.0081457)
+
+<h1>Special Thanks:</h1>
+Special thanks to NHEERL and ORD communications staff - Brian Garges, Lahne Mattas-Curry, Aaron Ferster, Melissa Anley-Mills, and Jessica Orquina - for helping us navigate this process of getting the tweets and blog post out. Also, Scott Chamberlain with <a title="ROpenSci" href="http://ropensci.org" target="_blank">ROpenSci</a> deserves mention for helping me navigate the PLOS Article Level Metrics API with the <code>alm</code> package.

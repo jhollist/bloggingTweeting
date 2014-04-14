@@ -1,0 +1,4 @@
+export(getArticleData)
+export(getCitationData)
+export(hollisterFig)
+export(milsteadFig)
